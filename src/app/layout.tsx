@@ -17,7 +17,7 @@ const siteSettingsFallback: SiteSettings = {
   developerName: "Landmark Nest Pvt. Ltd.",
   metaTitle: "Mulberry Hills Vijayapura | DTCP Approved Gated Plots, North Bangalore",
   metaDescription: "Mulberry Hills is a DTCP approved, RERA registered gated community plotted development in Vijayapura, North Bangalore. 83 plots across 5.5 acres with clear title and bank loan facility.",
-  ogImage: "/images/696a502b5959735a04b66728_a31d9da5d5b4a67dab52fce97d71cb07_Social-share.jpg",
+  ogImage: "/images/7696353e-45c7-4ccb-b8ad-6bab90dab678.png",
   gaId: "G-3LRMNFP7L5",
   fbPixelId: "1164421445117662",
 };
@@ -44,8 +44,8 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
     },
     icons: {
-      icon: "/images/69615623ad805642c1d79e03_Fav Icon.svg",
-      apple: "/images/69e3319b71897fde63bd1ae9_Web Clip (1).png",
+      icon: "/images/logo.png",
+      apple: "/images/logo.png",
     }
   };
 }
@@ -60,7 +60,6 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      data-wf-domain="titanpipe-template.webflow.io"
       data-wf-page="695a39548a779b2bfa0d5dd1"
       data-wf-site="695a39548a779b2bfa0d5de4"
       suppressHydrationWarning
