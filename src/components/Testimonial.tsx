@@ -1,9 +1,10 @@
 import React from 'react';
+import { getTestimonials } from '@/lib/content';
 
 // No resident testimonials exist yet for Mulberry Hills. Per the client content brief,
 // this uses trust markers instead of invented quotes/names — replace with genuine
 // resident testimonials once Phase 1 is occupied.
-const trustMarkers = [
+const fallback = [
   {
     description: 'Every plot at Mulberry Hills comes with a clear, marketable title.',
     title: 'Clear Marketable Title',
@@ -18,7 +19,12 @@ const trustMarkers = [
   },
 ];
 
-export default function Testimonial() {
+export default async function Testimonial() {
+  const entries = await getTestimonials();
+  const trustMarkers = entries.length
+    ? entries.map((e) => ({ title: e.title, description: e.description }))
+    : fallback;
+
   return (
     <section className="section testimonial">
       <div

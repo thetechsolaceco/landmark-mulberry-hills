@@ -2,36 +2,61 @@ import Script from 'next/script';
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Mulberry Hills Vijayapura | DTCP Approved Gated Plots, North Bangalore",
-  description: "Mulberry Hills is a DTCP approved, RERA registered gated community plotted development in Vijayapura, North Bangalore. 83 plots across 5.5 acres with clear title and bank loan facility.",
-  openGraph: {
-    title: "Mulberry Hills Vijayapura | DTCP Approved Gated Plots, North Bangalore",
-    description: "Mulberry Hills is a DTCP approved, RERA registered gated community plotted development in Vijayapura, North Bangalore. 83 plots across 5.5 acres with clear title and bank loan facility.",
-    images: [
-      {
-        url: "/images/696a502b5959735a04b66728_a31d9da5d5b4a67dab52fce97d71cb07_Social-share.jpg",
-      }
-    ],
-    type: "website",
-  },
-  twitter: {
-    title: "Mulberry Hills Vijayapura | DTCP Approved Gated Plots, North Bangalore",
-    description: "Mulberry Hills is a DTCP approved, RERA registered gated community plotted development in Vijayapura, North Bangalore. 83 plots across 5.5 acres with clear title and bank loan facility.",
-    images: ["/images/696a502b5959735a04b66728_a31d9da5d5b4a67dab52fce97d71cb07_Social-share.jpg"],
-    card: "summary_large_image",
-  },
-  icons: {
-    icon: "/images/69615623ad805642c1d79e03_Fav Icon.svg",
-    apple: "/images/69e3319b71897fde63bd1ae9_Web Clip (1).png",
-  }
+type SiteSettings = {
+  siteName: string;
+  developerName: string;
+  metaTitle: string;
+  metaDescription: string;
+  ogImage: string;
+  gaId: string;
+  fbPixelId: string;
 };
 
-export default function RootLayout({
+const siteSettingsFallback: SiteSettings = {
+  siteName: "Mulberry Hills",
+  developerName: "Landmark Nest Pvt. Ltd.",
+  metaTitle: "Mulberry Hills Vijayapura | DTCP Approved Gated Plots, North Bangalore",
+  metaDescription: "Mulberry Hills is a DTCP approved, RERA registered gated community plotted development in Vijayapura, North Bangalore. 83 plots across 5.5 acres with clear title and bank loan facility.",
+  ogImage: "/images/696a502b5959735a04b66728_a31d9da5d5b4a67dab52fce97d71cb07_Social-share.jpg",
+  gaId: "G-3LRMNFP7L5",
+  fbPixelId: "1164421445117662",
+};
+
+async function getSiteSettings(): Promise<SiteSettings> {
+  return siteSettingsFallback;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { metaTitle, metaDescription, ogImage } = await getSiteSettings();
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      images: [{ url: ogImage }],
+      type: "website",
+    },
+    twitter: {
+      title: metaTitle,
+      description: metaDescription,
+      images: [ogImage],
+      card: "summary_large_image",
+    },
+    icons: {
+      icon: "/images/69615623ad805642c1d79e03_Fav Icon.svg",
+      apple: "/images/69e3319b71897fde63bd1ae9_Web Clip (1).png",
+    }
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { gaId, fbPixelId } = await getSiteSettings();
+
   return (
     <html
       lang="en"
@@ -59,16 +84,16 @@ export default function RootLayout({
         }} />
 
         <Script id="inline-script-3" dangerouslySetInnerHTML={{
-          __html: `(function(w,i,g){w[g]=w[g]||[];if(typeof w[g].push=='function')w[g].push.apply(w[g],Array.isArray(i)?i:[i]);})(window,['G-3LRMNFP7L5'],'google_tags_first_party');`
+          __html: `(function(w,i,g){w[g]=w[g]||[];if(typeof w[g].push=='function')w[g].push.apply(w[g],Array.isArray(i)?i:[i]);})(window,['${gaId}'],'google_tags_first_party');`
         }} />
         <Script async src="/js/rNGRKzO6-t7IhZlEO5e0MYu9-Zc.js" />
-        
+
         <Script id="inline-script-4" dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('set', 'developer_id.dZGVlNj', true);gtag('set', 'developer_id.dYWYxNW', true);gtag('js', new Date());gtag('config', 'G-3LRMNFP7L5');`
+          __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('set', 'developer_id.dZGVlNj', true);gtag('set', 'developer_id.dYWYxNW', true);gtag('js', new Date());gtag('config', '${gaId}');`
         }} />
 
         <Script id="inline-script-5" dangerouslySetInnerHTML={{
-          __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.agent='plwebflow';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '1164421445117662');fbq('track', 'PageView');`
+          __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.agent='plwebflow';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '${fbPixelId}');fbq('track', 'PageView');`
         }} />
 
         <Script id="inline-script-6" dangerouslySetInnerHTML={{

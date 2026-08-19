@@ -1,6 +1,35 @@
 import React from 'react';
 
-const amenityGroups = [
+type AmenityGroup = {
+  icon: string;
+  title: string;
+  accent: string;
+  items: string[];
+};
+type AmenityGroupEntry = {
+  icon: string;
+  title: string;
+  accent: string;
+  items: string;
+};
+type HeroServiceContent = {
+  heading: string;
+  imagePhoto: string;
+  imagePhotoAlt: string;
+  imageDiagram: string;
+  imageDiagramAlt: string;
+};
+
+const fallback: HeroServiceContent = {
+  heading: 'Amenities & Infrastructure at Mulberry Hills',
+  imagePhoto: '/images/amenities-garden.png',
+  imagePhotoAlt: "Landscaped pergola, walkways and children's play area at Mulberry Hills",
+  imageDiagram: '/images/amenities-road-diagram.png',
+  imageDiagramAlt:
+    'Road infrastructure cross-section showing landscaping, street light, foot path, water supply, bioretention, sewer water drain and sewage drain',
+};
+
+const fallbackGroups: AmenityGroup[] = [
   {
     icon: '/images/69665c4191e90125c5dfa8cd_Hero%20Service%20Icon%201.svg',
     title: 'Gated Community & Grand Entrance',
@@ -44,13 +73,16 @@ const amenityGroups = [
   },
 ];
 
-export default function HeroService() {
+export default async function HeroService() {
+  const data = fallback;
+  const groups = fallbackGroups;
+
   return (
     <section id="amenities" className="section hero-service">
       <div className="container">
         <div className="hero-service-wrap">
           <div className="hero-service-title-box">
-            <h2 className="hero-service-title">Amenities &amp; Infrastructure at Mulberry Hills</h2>
+            <h2 className="hero-service-title">{data.heading}</h2>
           </div>
         </div>
       </div>
@@ -58,7 +90,7 @@ export default function HeroService() {
         <div className="container">
           <div className="amenities-info-grid">
             <div className="amenities-info-content">
-              {amenityGroups.map((group) => (
+              {groups.map((group) => (
                 <div className="info-card" style={{ '--accent': group.accent } as React.CSSProperties} key={group.title}>
                   <div className="card-icon-box">
                     <img src={group.icon} loading="lazy" alt="" className="amenities-card-icon" />
@@ -74,16 +106,16 @@ export default function HeroService() {
             </div>
             <div className="amenities-info-media">
               <img
-                src="/images/amenities-garden.png"
+                src={data.imagePhoto}
                 loading="lazy"
-                alt="Landscaped pergola, walkways and children's play area at Mulberry Hills"
+                alt={data.imagePhotoAlt}
                 className="amenities-info-photo"
               />
               <div className="amenities-info-diagram-wrap">
                 <img
-                  src="/images/amenities-road-diagram.png"
+                  src={data.imageDiagram}
                   loading="lazy"
-                  alt="Road infrastructure cross-section showing landscaping, street light, foot path, water supply, bioretention, sewer water drain and sewage drain"
+                  alt={data.imageDiagramAlt}
                   className="amenities-info-diagram"
                 />
               </div>

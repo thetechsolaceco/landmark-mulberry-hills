@@ -1,6 +1,28 @@
 import React from 'react';
 
-export default function Timeline() {
+type TimelineStep = { title: string; description: string; image: string };
+type TimelineContent = {
+  heading: string;
+  subtitle: string;
+};
+
+const fallback: TimelineContent = {
+  heading: 'How Owning Your Plot Works',
+  subtitle: 'A seamless, guided journey from your first site visit to owning your plot at Mulberry Hills.',
+};
+
+const fallbackSteps: TimelineStep[] = [
+  {
+    title: 'Enquiry & Site Visit',
+    description: 'Reach out by phone or the enquiry form, and schedule a visit to see the Mulberry Hills layout and location firsthand.',
+    image: '/images/b8d5ad51-6261-4e51-a9e9-24c2ae8e2575.png',
+  },
+];
+
+export default async function Timeline() {
+  const data = fallback;
+  const steps = fallbackSteps;
+
   return (
     <section className="section" style={{ backgroundColor: "#fafafa", padding: "160px 0", position: 'relative', overflow: 'hidden' }}>
       
@@ -101,25 +123,24 @@ export default function Timeline() {
       <div className="container">
         <div className="hero-service-wrap" style={{ marginBottom: '120px', position: 'relative', zIndex: 1 }}>
           <div className="hero-service-title-box" style={{ maxWidth: '100%' }}>
-            <h2 className="hero-service-title" style={{ textAlign: 'center', fontSize: '4rem', color: '#1a1a1a' }}>How Owning Your Plot Works</h2>
-            <p style={{ textAlign: 'center', color: '#666', fontSize: '1.25rem', marginTop: '20px', maxWidth: '600px', margin: '20px auto 0' }}>A seamless, guided journey from your first site visit to owning your plot at Mulberry Hills.</p>
+            <h2 className="hero-service-title" style={{ textAlign: 'center', fontSize: '4rem', color: '#1a1a1a' }}>{data.heading}</h2>
+            <p style={{ textAlign: 'center', color: '#666', fontSize: '1.25rem', marginTop: '20px', maxWidth: '600px', margin: '20px auto 0' }}>{data.subtitle}</p>
           </div>
         </div>
-        
-        <div className="editorial-wrap">
-          
-          {/* Step 1: Landscape */}
-          <div className="editorial-row">
-            <div className="editorial-img-container">
-              <img src="/images/b8d5ad51-6261-4e51-a9e9-24c2ae8e2575.png" alt="Enquiry & Site Visit" className="editorial-img" loading="lazy" />
-            </div>
-            <div className="editorial-content-box">
-              <div className="editorial-number-bg">01</div>
-              <h3 className="editorial-title">Enquiry &amp; Site Visit</h3>
-              <div className="editorial-desc">Reach out by phone or the enquiry form, and schedule a visit to see the Mulberry Hills layout and location firsthand.</div>
-            </div>
-          </div>
 
+        <div className="editorial-wrap">
+          {steps.map((step, i) => (
+            <div className="editorial-row" key={step.title}>
+              <div className="editorial-img-container">
+                <img src={step.image} alt={step.title} className="editorial-img" loading="lazy" />
+              </div>
+              <div className="editorial-content-box">
+                <div className="editorial-number-bg">{String(i + 1).padStart(2, '0')}</div>
+                <h3 className="editorial-title">{step.title}</h3>
+                <div className="editorial-desc">{step.description}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -22,10 +22,40 @@ const PinIcon = () => (
   </svg>
 );
 
-const connectivityGroups = [
+const ICONS: Record<string, React.ComponentType> = {
+  road: RoadIcon,
+  institution: InstitutionIcon,
+  pin: PinIcon,
+};
+
+type ConnectivityGroup = {
+  title: string;
+  icon: string;
+  accent: string;
+  items: string[];
+};
+type ConnectivityGroupEntry = {
+  title: string;
+  icon: string;
+  accent: string;
+  items: string;
+};
+type ConnectivityContent = {
+  eyebrow: string;
+  headingPrefix: string;
+  headingAccent: string;
+};
+
+const fallback: ConnectivityContent = {
+  eyebrow: 'Location',
+  headingPrefix: 'Multi-Modal',
+  headingAccent: 'Connectivity',
+};
+
+const fallbackGroups: ConnectivityGroup[] = [
   {
     title: 'Road & Highway Access',
-    icon: RoadIcon,
+    icon: 'road',
     accent: 'var(--color--brand-maroon)',
     items: [
       'Well connected to Satellite Town Ring Road (S.T.R.R.)',
@@ -38,7 +68,7 @@ const connectivityGroups = [
   },
   {
     title: 'Social Infrastructure & Transit',
-    icon: InstitutionIcon,
+    icon: 'institution',
     accent: 'var(--color--brand-gold)',
     items: [
       'Social infrastructure with multiple schools, colleges and hospitals nearby, including Akash International School, Brigade School for Global Minds, Chanakya University, Nagarjuna College of Engineering and Ramaiah Leena Hospital, and much more',
@@ -50,7 +80,7 @@ const connectivityGroups = [
   },
   {
     title: 'Nearby Developments',
-    icon: PinIcon,
+    icon: 'pin',
     accent: 'var(--color--brand-teal)',
     items: [
       'Nearby other Real Estate Projects: Brigade Atmosphere Row House and Pearl Apartment Project',
@@ -58,19 +88,22 @@ const connectivityGroups = [
   },
 ];
 
-export default function Connectivity() {
+export default async function Connectivity() {
+  const data = fallback;
+  const groups = fallbackGroups;
+
   return (
     <section id="connectivity" className="section connectivity-section">
       <div className="container">
         <div className="slider-sub-title-box">
-          <div className="description dark">Location</div>
+          <div className="description dark">{data.eyebrow}</div>
         </div>
         <h2 className="section-heading">
-          Multi-Modal <span className="heading-accent">Connectivity</span>
+          {data.headingPrefix} <span className="heading-accent">{data.headingAccent}</span>
         </h2>
         <div className="info-columns">
-          {connectivityGroups.map((group) => {
-            const Icon = group.icon;
+          {groups.map((group) => {
+            const Icon = ICONS[group.icon] ?? RoadIcon;
             return (
               <div className="info-card" style={{ '--accent': group.accent } as React.CSSProperties} key={group.title}>
                 <div className="card-icon-box">
