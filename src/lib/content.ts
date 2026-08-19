@@ -17,3 +17,32 @@ export async function getList<T>(model: string): Promise<T[]> {
 export async function getTestimonials() {
   return getList<{ title: string; description: string }>("testimonial");
 }
+
+export type BlogPostEntry = {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  coverImageSrc: string;
+  coverImageAlt: string;
+  author: string;
+  publishedAt: string;
+  category: string;
+};
+
+export async function getBlogPosts() {
+  return getList<BlogPostEntry>("blog");
+}
+
+export async function getBlogPost(slug: string) {
+  try {
+    const entry = await nucleus.findOne("blog", { filter: { slug } }, { revalidate: 300 });
+    return entry ? (entry.data as BlogPostEntry) : null;
+  } catch (e) {
+    if (isNucleusError(e)) {
+      console.error(`Nucleus fetch failed for "blog" slug "${slug}": ${e.code} ${e.message}`);
+      return null;
+    }
+    throw e;
+  }
+}

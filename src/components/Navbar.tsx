@@ -16,6 +16,7 @@ const fallbackLinks: NavLink[] = [
   { label: 'About Us', href: '#about' },
   { label: 'Amenities & Layout', href: '#amenities' },
   { label: 'FAQ', href: '#faq' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Contact Us', href: '#contact' },
 ];
 
